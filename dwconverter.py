@@ -38,6 +38,7 @@ def get_column(line):
     name = line[:index1]
     index2 = line.index("(")
     type = line[index1 + 1:index2]
+    name = get_name_based_on_cloumn_type(name, type)
     type = get_column_type(type)
     obj = {
         "name": name,
@@ -46,11 +47,29 @@ def get_column(line):
     return obj
 
 
+def get_name_based_on_cloumn_type(name, type):
+    if type == "ForeignKey":
+        if name.endswith("_id"):
+            return name
+        return name + "_id"
+    elif type == "BooleanField":
+        if name.startswith("is_"):
+            return name
+        return "is_" + name
+    elif type == "DateTimeField":
+        if name.endswith("_at"):
+            return name
+        return name + "_at"
+    else:
+        return name
+
+
 def get_column_type(type):
-    if type == "UUIDField" or type == "ForeignKey" or type == "FloatField" or type == "IntegerField":
+    if type == "UUIDField" or type == "FloatField" or type == "IntegerField":
         return "number"
-    elif type == "DateTimeField" or type == "TextField" or type == "CharField":
+    elif type == "DateTimeField" or type == "ForeignKey" or type == "TextField" or type == "CharField":
         return "string"
+
     elif type == "BooleanField":
         return "boolean"
     else:
