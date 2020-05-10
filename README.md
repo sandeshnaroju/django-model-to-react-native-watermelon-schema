@@ -8,5 +8,5 @@ This is simple python script that converts Django models.py to WatermelonDB sche
 
 `$ python dwconverter.py models.py`
 
-That above command will generate `schema.js` to use in react native applications that use watermelondb as db framework. 
+That above command will generate `schema.js` to use in `react native applications` that use `watermelondb` as db framework. 
 
